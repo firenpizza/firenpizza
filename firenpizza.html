@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firen Pizza — Mobile Pizza Experience | Peninsula, Bay Area</title>
+  <meta name="description" content="Firen Pizza is a mobile pizza experience for birthdays, team building, baby showers and more. Serving the Peninsula, Bay Area. Make your own or sit back — we bring the fire."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --black: #0e0e0c;
+      --black-2: #111110;
+      --black-3: #161610;
+      --black-4: #1e1e18;
+      --gold: #C9A84C;
+      --gold-light: #dbbe6a;
+      --gold-dim: #8a7030;
+      --cream: #f5f2ec;
+      --cream-dim: #c8c4ba;
+      --grey: #555550;
+      --grey-light: #3a3a34;
+      --border: #2a2a1e;
+      --border-subtle: #1e1e18;
+      --flame-red: #e63c1e;
+      --flame-orange: #f07020;
+      --flame-yellow: #f5c842;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--cream);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(14,14,12,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid var(--border-subtle);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 62px;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .nav-wordmark .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400; color: var(--cream);
+      letter-spacing: -0.3px; line-height: 1;
+    }
+    .nav-wordmark .name span { color: var(--gold); }
+    .nav-wordmark .sub {
+      font-size: 8px; color: var(--gold); letter-spacing: 2.5px;
+      text-transform: uppercase; font-weight: 300;
+    }
+
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      font-size: 12px; color: var(--grey); text-decoration: none;
+      letter-spacing: 0.3px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-btn {
+      background: var(--gold); color: var(--black); border: none;
+      padding: 9px 20px; border-radius: 6px;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--gold-light); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--black-2);
+      padding: 100px 40px 110px;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 0.5px solid var(--border); border-radius: 20px;
+      padding: 6px 16px; margin-bottom: 36px;
+      background: rgba(201,168,76,0.05);
+    }
+    .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+    .hero-badge span {
+      font-size: 11px; color: var(--gold); letter-spacing: 1.2px;
+      text-transform: uppercase; font-weight: 300;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 68px; font-weight: 300; color: var(--cream);
+      letter-spacing: -2px; line-height: 1.05;
+      margin-bottom: 24px; max-width: 620px;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+
+    .hero p {
+      font-size: 15px; color: var(--grey); line-height: 1.75;
+      max-width: 400px; margin-bottom: 40px; font-weight: 300;
+    }
+
+    .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-gold {
+      background: var(--gold); color: var(--black); border: none;
+      padding: 14px 32px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent; color: var(--cream);
+      border: 0.5px solid var(--border); padding: 14px 32px;
+      border-radius: 8px; font-size: 13px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--grey); }
+
+    .hero-pills {
+      display: flex; gap: 10px; margin-top: 56px;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .pill {
+      display: flex; align-items: center; gap: 8px;
+      border: 0.5px solid var(--border); border-radius: 20px;
+      padding: 7px 16px; font-size: 12px; color: var(--grey);
+      background: rgba(201,168,76,0.03); font-weight: 300;
+    }
+    .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-wrap {
+      background: var(--gold); padding: 12px 0; overflow: hidden;
+      border-top: none; border-bottom: none;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 24s linear infinite; white-space: nowrap;
+    }
+    .marquee-item {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-weight: 400; color: var(--black);
+      padding: 0 32px; letter-spacing: 0.5px;
+    }
+    .marquee-sep { color: var(--black); opacity: 0.4; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTIONS ── */
+    .section { padding: 80px 40px; }
+    .section.alt { background: var(--black-2); }
+
+    .eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300; color: var(--cream);
+      letter-spacing: -1px; margin-bottom: 12px; line-height: 1.15;
+    }
+
+    .section-sub {
+      font-size: 14px; color: var(--grey); line-height: 1.75;
+      max-width: 480px; margin-bottom: 40px; font-weight: 300;
+    }
+
+    /* ── EXPERIENCE CARDS ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .exp-card {
+      background: var(--black-3); border-radius: 14px;
+      padding: 32px; border: 0.5px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .exp-card:hover { border-color: rgba(201,168,76,0.3); }
+
+    .exp-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--black-4); border: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .exp-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400; color: var(--cream); margin-bottom: 8px;
+    }
+    .exp-card p { font-size: 13px; color: var(--grey); line-height: 1.7; font-weight: 300; }
+
+    /* ── EVENTS ── */
+    .events-section { background: var(--black-2); padding: 80px 40px; }
+    .events-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 36px; }
+
+    .event-card {
+      background: var(--black-3); border: 0.5px solid var(--border);
+      border-radius: 12px; padding: 22px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .event-card:hover { border-color: rgba(201,168,76,0.25); transform: translateY(-2px); }
+
+    .event-tag {
+      font-size: 10px; color: var(--gold); letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 10px; display: block; font-weight: 300;
+    }
+    .event-card h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--cream); margin-bottom: 6px;
+    }
+    .event-card p { font-size: 12px; color: var(--grey); line-height: 1.6; font-weight: 300; }
+
+    /* ── MENU ── */
+    .menu-section { padding: 80px 40px; background: var(--black); }
+
+    .topping-cats { display: flex; flex-direction: column; gap: 36px; margin-bottom: 64px; }
+
+    .cat-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--grey);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 12px;
+    }
+    .cat-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border-subtle); }
+
+    .topping-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .topping-pill {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--black-3); border-radius: 100px;
+      padding: 8px 16px; font-size: 12px; color: var(--cream-dim);
+      border: 0.5px solid var(--border); font-weight: 300;
+      transition: border-color 0.2s;
+    }
+    .topping-pill:hover { border-color: rgba(201,168,76,0.3); }
+    .topping-pill.veg { background: #0e180c; border-color: #1e2e18; color: #a8c8a0; }
+    .topping-pill.base { background: #1a1408; border-color: #2e2010; color: #c8b890; }
+
+    .tp-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .tp-dot.meat { background: #c8785a; }
+    .tp-dot.veg { background: #7a9e6e; }
+    .tp-dot.base { background: var(--gold); }
+    .tp-dot.cheese { background: #e8d098; }
+    .tp-dot.finish { background: #a89878; }
+
+    .menu-divider { height: 0.5px; background: var(--border-subtle); margin: 0 0 48px; }
+
+    .picks-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; font-weight: 300; color: var(--cream);
+      margin-bottom: 6px; letter-spacing: -0.5px;
+    }
+    .picks-sub { font-size: 13px; color: var(--grey); margin-bottom: 24px; font-weight: 300; }
+
+    .picks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 48px; }
+
+    .pick-card {
+      background: var(--black-3); border-radius: 12px;
+      border: 0.5px solid var(--border); padding: 24px 22px;
+      transition: border-color 0.2s;
+    }
+    .pick-card:hover { border-color: rgba(201,168,76,0.3); }
+
+    .pick-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 400; color: var(--cream); margin-bottom: 4px;
+    }
+    .pick-desc { font-size: 12px; color: var(--grey); margin-bottom: 14px; font-weight: 300; }
+    .pick-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pick-tag {
+      font-size: 11px; color: var(--gold);
+      border: 0.5px solid rgba(201,168,76,0.25); border-radius: 100px;
+      padding: 3px 10px; background: rgba(201,168,76,0.05);
+    }
+
+    .included-bar {
+      background: var(--black-3); border-radius: 14px;
+      padding: 28px 32px; border: 0.5px solid var(--border);
+      display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start;
+    }
+    .inc-title {
+      font-size: 10px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 16px;
+    }
+    .inc-items { display: flex; flex-wrap: wrap; gap: 10px; }
+    .inc-item {
+      font-size: 13px; color: var(--grey); display: flex;
+      align-items: center; gap: 8px; font-weight: 300;
+    }
+    .inc-item::before {
+      content: ''; display: block; width: 4px; height: 4px;
+      border-radius: 50%; background: rgba(201,168,76,0.4);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps-section { background: var(--black-2); padding: 80px 40px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 40px; }
+
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 0.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--gold); margin-bottom: 16px;
+      font-weight: 300;
+    }
+    .step h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 400; color: var(--cream); margin-bottom: 8px;
+    }
+    .step p { font-size: 13px; color: var(--grey); line-height: 1.65; font-weight: 300; }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--black); padding: 80px 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-strip h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300; color: var(--cream);
+      letter-spacing: -1px; line-height: 1.15; margin-bottom: 20px;
+    }
+    .about-strip h2 em { color: var(--gold); font-style: italic; }
+    .about-strip p { font-size: 14px; color: var(--grey); line-height: 1.8; font-weight: 300; margin-bottom: 16px; }
+
+    .about-stats { display: flex; gap: 40px; margin-top: 32px; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; font-weight: 300; color: var(--gold); line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: var(--grey); letter-spacing: 0.5px; font-weight: 300; margin-top: 4px; }
+
+    .about-visual {
+      background: var(--black-3); border-radius: 20px;
+      border: 0.5px solid var(--border); padding: 48px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 320px; position: relative; overflow: hidden;
+    }
+    .about-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--gold); padding: 88px 40px; text-align: center;
+    }
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px; font-weight: 300; color: var(--black);
+      margin-bottom: 14px; letter-spacing: -1.2px; line-height: 1.1;
+    }
+    .cta-section p { font-size: 14px; color: var(--gold-dim); margin-bottom: 36px; font-weight: 300; }
+
+    .cta-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .cta-input {
+      padding: 13px 20px; border-radius: 8px;
+      border: 0.5px solid rgba(0,0,0,0.15); background: rgba(255,255,255,0.25);
+      color: var(--black); font-size: 13px; width: 210px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .cta-input::placeholder { color: rgba(0,0,0,0.4); }
+
+    .btn-dark {
+      background: var(--black); color: var(--cream); border: none;
+      padding: 13px 28px; border-radius: 8px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: var(--black-2); }
+
+    .cta-note {
+      font-size: 11px; color: rgba(0,0,0,0.4); margin-top: 16px; font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080806; padding: 40px;
+      border-top: 0.5px solid var(--border-subtle);
+    }
+
+    .footer-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: 32px; margin-bottom: 40px;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 14px; }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 400; color: var(--cream); letter-spacing: -0.3px;
+    }
+    .footer-name span { color: var(--gold); }
+    .footer-tagline { font-size: 11px; color: var(--grey-light); font-weight: 300; margin-top: 4px; letter-spacing: 0.3px; }
+
+    .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+    .footer-col h5 {
+      font-size: 10px; font-weight: 500; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+    }
+    .footer-col a, .footer-col p {
+      display: block; font-size: 13px; color: var(--grey-light);
+      text-decoration: none; margin-bottom: 8px; font-weight: 300;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--cream); }
+
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 0.5px solid var(--border-subtle); padding-top: 24px;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-bottom p { font-size: 11px; color: var(--grey-light); font-weight: 300; }
+
+    .social-links { display: flex; gap: 16px; }
+    .social-link {
+      font-size: 11px; color: var(--grey-light); text-decoration: none;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .social-link:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 64px 20px 72px; }
+      .hero h1 { font-size: 44px; }
+      .section, .events-section, .menu-section, .steps-section, .about-strip, .cta-section { padding: 56px 20px; }
+      .two-col, .events-grid, .picks-grid, .steps-grid, .about-strip { grid-template-columns: 1fr; gap: 12px; }
+      .about-strip { gap: 40px; }
+      .footer { padding: 32px 20px; }
+      .footer-top { flex-direction: column; }
+      .footer-cols { gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="46" height="54" viewBox="0 0 46 54" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="flame-nav" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#e63c1e"/>
+            <stop offset="50%" stop-color="#f07020"/>
+            <stop offset="100%" stop-color="#f5c842"/>
+          </linearGradient>
+        </defs>
+        <path d="M4,36 Q4,6 23,6 Q42,6 42,36" fill="none" stroke="#C9A84C" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="4" y1="36" x2="42" y2="36" stroke="#C9A84C" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="4" y1="44" x2="42" y2="44" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.3"/>
+        <path d="M12,36 Q12,20 23,20 Q34,20 34,36" fill="#111110"/>
+        <path d="M12,36 Q12,20 23,20 Q34,20 34,36" fill="none" stroke="#C9A84C" stroke-width="0.9"/>
+        <path d="M23,33 C21,33 18,31 18,28 C18,25 20,23 21,20 C21,22 22,23 22,25 C22,23 22,21 23,18 C24,21 24,23 24,25 C24,23 25,22 25,20 C26,23 28,25 28,28 C28,31 25,33 23,33 Z" fill="url(#flame-nav)"/>
+      </svg>
+      <div class="nav-wordmark">
+        <div class="name">Firen <span>Pizza</span></div>
+        <div class="sub">Mobile Pizza Experience</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#menu">Menu</a>
+      <a href="#events">Events</a>
+      <a href="#book">Book</a>
+    </div>
+    <button class="nav-btn" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book an event ↗</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Peninsula · Bay Area</span>
+    </div>
+    <h1>Pizza, <em>your way.</em><br>We bring the fire.</h1>
+    <p>A mobile pizza experience crafted for birthdays, team building, baby showers & more. Make it yourself or sit back — either way, it's unforgettable.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Book your event ↗</button>
+      <button class="btn-ghost" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">How it works</button>
+    </div>
+    <div class="hero-pills">
+      <div class="pill"><div class="pill-dot"></div>Make your own pizza</div>
+      <div class="pill"><div class="pill-dot"></div>We come to you</div>
+      <div class="pill"><div class="pill-dot"></div>Salad, honey & baked goods included</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Birthdays</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Team Building</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Baby Showers</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Graduations</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Block Parties</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Private Events</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Corporate</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Celebrations</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Birthdays</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Team Building</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Baby Showers</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Graduations</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Block Parties</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Private Events</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Corporate</span><span class="marquee-item marquee-sep">·</span>
+      <span class="marquee-item">Celebrations</span><span class="marquee-item marquee-sep">·</span>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience">
+    <div class="eyebrow">The experience</div>
+    <h2>Two ways to enjoy it</h2>
+    <p class="section-sub">Whether your guests want to roll up their sleeves or relax with a drink in hand, Firen Pizza delivers either way.</p>
+    <div class="two-col">
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="fi1" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#e63c1e"/><stop offset="100%" stop-color="#f5c842"/></linearGradient></defs>
+            <path d="M10,17 C8,17 6,15 6,13 C6,10 8,8 9,6 C9,8 10,9 10,11 C10,9 10,7 10,4 C11,7 11,9 11,11 C11,9 12,8 12,6 C13,8 14,10 14,13 C14,15 12,17 10,17 Z" fill="url(#fi1)"/>
+          </svg>
+        </div>
+        <h3>Make your own</h3>
+        <p>Guests choose their toppings, stretch the dough, and fire their own pizza. Perfect for kids, teams, and anyone who loves getting their hands in it.</p>
+      </div>
+      <div class="exp-card">
+        <div class="exp-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="10" cy="10" r="7" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+            <circle cx="10" cy="10" r="2.5" fill="#C9A84C"/>
+          </svg>
+        </div>
+        <h3>Sit back & savor</h3>
+        <p>Prefer to relax? We handcraft a pizza made just for you — topped, fired, and served fresh alongside your sides and baked goods.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events-section" id="events">
+    <div class="eyebrow">Perfect for</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream);letter-spacing:-1px;margin-bottom:12px;">Every kind of gathering</h2>
+    <div class="events-grid">
+      <div class="event-card"><span class="event-tag">Birthdays</span><h4>Kids & adults</h4><p>The most memorable party they've ever had — guaranteed.</p></div>
+      <div class="event-card"><span class="event-tag">Corporate</span><h4>Team building</h4><p>Collaborative, delicious, and actually something people enjoy.</p></div>
+      <div class="event-card"><span class="event-tag">Celebrate</span><h4>Baby showers</h4><p>Warm, relaxed, and perfect for the whole crew.</p></div>
+      <div class="event-card"><span class="event-tag">Milestone</span><h4>Graduations</h4><p>Mark the moment with something truly special.</p></div>
+      <div class="event-card"><span class="event-tag">Community</span><h4>Block parties</h4><p>Bring the whole neighborhood to the table.</p></div>
+      <div class="event-card"><span class="event-tag">Any occasion</span><h4>Private events</h4><p>If there's a reason to gather, we'll be there.</p></div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section" id="menu">
+    <div class="eyebrow">The menu</div>
+    <h2>Build your perfect pizza</h2>
+    <p class="section-sub">Choose exactly what you want from our fresh topping bar — or let one of our four chef's picks guide you.</p>
+
+    <div class="topping-cats">
+      <div>
+        <div class="cat-label">Bases & sauces</div>
+        <div class="topping-grid">
+          <div class="topping-pill base"><div class="tp-dot base"></div>Classic tomato</div>
+          <div class="topping-pill base"><div class="tp-dot base"></div>White garlic cream</div>
+          <div class="topping-pill base"><div class="tp-dot base"></div>Olive oil & herb</div>
+          <div class="topping-pill base"><div class="tp-dot base"></div>Pesto</div>
+          <div class="topping-pill base"><div class="tp-dot base"></div>Spicy arrabiata</div>
+        </div>
+      </div>
+      <div>
+        <div class="cat-label">Cheese</div>
+        <div class="topping-grid">
+          <div class="topping-pill"><div class="tp-dot cheese"></div>Fresh mozzarella</div>
+          <div class="topping-pill"><div class="tp-dot cheese"></div>Burrata</div>
+          <div class="topping-pill"><div class="tp-dot cheese"></div>Ricotta</div>
+          <div class="topping-pill"><div class="tp-dot cheese"></div>Pecorino</div>
+          <div class="topping-pill"><div class="tp-dot cheese"></div>Gorgonzola</div>
+        </div>
+      </div>
+      <div>
+        <div class="cat-label">Proteins</div>
+        <div class="topping-grid">
+          <div class="topping-pill"><div class="tp-dot meat"></div>Beef pepperoni</div>
+          <div class="topping-pill"><div class="tp-dot meat"></div>Spicy beef sausage</div>
+          <div class="topping-pill"><div class="tp-dot meat"></div>Grilled chicken</div>
+          <div class="topping-pill"><div class="tp-dot meat"></div>Grilled shrimp</div>
+          <div class="topping-pill"><div class="tp-dot meat"></div>Smoked turkey</div>
+          <div class="topping-pill"><div class="tp-dot meat"></div>Wagyu beef</div>
+        </div>
+      </div>
+      <div>
+        <div class="cat-label">Vegetables</div>
+        <div class="topping-grid">
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Roasted cherry tomatoes</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Caramelized onion</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Wild mushrooms</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Roasted red pepper</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Artichoke hearts</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Baby arugula</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Castelvetrano olives</div>
+          <div class="topping-pill veg"><div class="tp-dot veg"></div>Shaved fennel</div>
+        </div>
+      </div>
+      <div>
+        <div class="cat-label">Finishing touches</div>
+        <div class="topping-grid">
+          <div class="topping-pill"><div class="tp-dot finish"></div>Fresh basil</div>
+          <div class="topping-pill"><div class="tp-dot finish"></div>Calabrian chili oil</div>
+          <div class="topping-pill"><div class="tp-dot finish"></div>Fire honey</div>
+          <div class="topping-pill"><div class="tp-dot finish"></div>Flaky sea salt</div>
+          <div class="topping-pill"><div class="tp-dot finish"></div>Lemon zest</div>
+          <div class="topping-pill"><div class="tp-dot finish"></div>Truffle oil</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-divider"></div>
+
+    <div class="picks-heading">Chef's picks</div>
+    <p class="picks-sub">Not sure where to start? These four are the crowd favorites.</p>
+
+    <div class="picks-grid">
+      <div class="pick-card">
+        <div class="pick-name">The Classic</div>
+        <div class="pick-desc">Simple, perfect, timeless.</div>
+        <div class="pick-tags">
+          <span class="pick-tag">Tomato</span>
+          <span class="pick-tag">Mozzarella</span>
+          <span class="pick-tag">Basil</span>
+          <span class="pick-tag">Sea salt</span>
+        </div>
+      </div>
+      <div class="pick-card">
+        <div class="pick-name">The White</div>
+        <div class="pick-desc">Rich, savory, deeply satisfying.</div>
+        <div class="pick-tags">
+          <span class="pick-tag">Garlic cream</span>
+          <span class="pick-tag">Ricotta</span>
+          <span class="pick-tag">Mushrooms</span>
+          <span class="pick-tag">Truffle oil</span>
+        </div>
+      </div>
+      <div class="pick-card">
+        <div class="pick-name">The Garden</div>
+        <div class="pick-desc">Bright, fresh, vegetable-forward.</div>
+        <div class="pick-tags">
+          <span class="pick-tag">Pesto</span>
+          <span class="pick-tag">Burrata</span>
+          <span class="pick-tag">Cherry tomatoes</span>
+          <span class="pick-tag">Arugula</span>
+        </div>
+      </div>
+      <div class="pick-card">
+        <div class="pick-name">The Showstopper</div>
+        <div class="pick-desc">Sweet heat, bold contrast.</div>
+        <div class="pick-tags">
+          <span class="pick-tag">Arrabiata</span>
+          <span class="pick-tag">Beef pepperoni</span>
+          <span class="pick-tag">Gorgonzola</span>
+          <span class="pick-tag">Fire honey</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="included-bar">
+      <div>
+        <div class="inc-title">Every meal includes</div>
+        <div class="inc-items">
+          <div class="inc-item">Chef's choice salad</div>
+          <div class="inc-item">Herb dipping oil</div>
+          <div class="inc-item">Fire honey</div>
+          <div class="inc-item">Warm baked good</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="steps-section">
+    <div class="eyebrow">How it works</div>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream);letter-spacing:-1px;">Simple from start to slice</h2>
+    <div class="steps-grid">
+      <div class="step"><div class="step-num">1</div><h4>Book your event</h4><p>Tell us your date, guest count, and vibe. We'll handle everything else from there.</p></div>
+      <div class="step"><div class="step-num">2</div><h4>We set up</h4><p>Our mobile kitchen arrives and is fully ready before the first guest walks in.</p></div>
+      <div class="step"><div class="step-num">3</div><h4>Make or relax</h4><p>Guests jump in to create their own, or we handcraft one just for them.</p></div>
+      <div class="step"><div class="step-num">4</div><h4>Fire & feast</h4><p>Pizzas fire fresh in the oven. Salad, honey, and baked goods served alongside.</p></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-strip">
+    <div>
+      <div class="eyebrow">About us</div>
+      <h2>Born on the <em>Peninsula.</em><br>Built around the table.</h2>
+      <p>Firen Pizza started with a simple idea — bring people together around the joy of making and eating great pizza. Whether it's a birthday for ten kids or a corporate team of fifty, we show up with everything you need for an experience people actually talk about.</p>
+      <p>We're a mobile operation, which means we come to you — backyard, office, park, or venue. Our oven does the heavy lifting. You just bring the people.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Have-it-your-way</div>
+        </div>
+        <div>
+          <div class="stat-num">0</div>
+          <div class="stat-label">Pork — ever</div>
+        </div>
+        <div>
+          <div class="stat-num">1</div>
+          <div class="stat-label">Oven. All the heat.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <svg width="120" height="140" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="flame-big" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#e63c1e"/>
+            <stop offset="50%" stop-color="#f07020"/>
+            <stop offset="100%" stop-color="#f5c842"/>
+          </linearGradient>
+        </defs>
+        <path d="M10,90 Q10,18 60,18 Q110,18 110,90" fill="none" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+        <line x1="10" y1="90" x2="110" y2="90" stroke="#C9A84C" stroke-width="4" stroke-linecap="round"/>
+        <line x1="10" y1="108" x2="110" y2="108" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+        <path d="M30,90 Q30,52 60,52 Q90,52 90,90" fill="#111110"/>
+        <path d="M30,90 Q30,52 60,52 Q90,52 90,90" fill="none" stroke="#C9A84C" stroke-width="2"/>
+        <path d="M60,84 C54,84 48,79 48,73 C48,65 54,57 57,50 C57,55 59,58 58,62 C58,58 59,54 60,46 C61,54 62,58 62,62 C61,58 63,55 63,50 C66,57 72,65 72,73 C72,79 66,84 60,84 Z" fill="url(#flame-big)"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- CTA / BOOK -->
+  <section class="cta-section" id="book">
+    <h2>Ready to book your event?</h2>
+    <p>Serving the Peninsula and greater Bay Area. Check your date and let's get fired up.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="text" placeholder="Your name"/>
+      <input class="cta-input" type="text" placeholder="Event date"/>
+      <input class="cta-input" type="text" placeholder="Guest count"/>
+      <button class="btn-dark">Request a quote ↗</button>
+    </div>
+    <p class="cta-note">Or reach us directly at info@firenpizza.com · Phone coming soon</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg width="36" height="42" viewBox="0 0 36 42" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="flame-foot" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#e63c1e"/>
+                <stop offset="50%" stop-color="#f07020"/>
+                <stop offset="100%" stop-color="#f5c842"/>
+              </linearGradient>
+            </defs>
+            <path d="M3,28 Q3,5 18,5 Q33,5 33,28" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="3" y1="28" x2="33" y2="28" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="3" y1="34" x2="33" y2="34" stroke="#C9A84C" stroke-width="0.7" stroke-linecap="round" opacity="0.3"/>
+            <path d="M9,28 Q9,16 18,16 Q27,16 27,28" fill="#0a0a08"/>
+            <path d="M9,28 Q9,16 18,16 Q27,16 27,28" fill="none" stroke="#C9A84C" stroke-width="0.8"/>
+            <path d="M18,26 C16,26 14,24 14,22 C14,20 15,18 16,16 C16,17 17,18 17,20 C17,18 17,16 18,14 C19,16 19,18 19,20 C19,18 20,17 20,16 C21,18 22,20 22,22 C22,24 20,26 18,26 Z" fill="url(#flame-foot)"/>
+          </svg>
+          <div>
+            <div class="footer-name">Firen <span>Pizza</span></div>
+            <div class="footer-tagline">Mobile Pizza Experience · Peninsula, Bay Area</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <a href="#experience">Experience</a>
+          <a href="#menu">Menu</a>
+          <a href="#events">Events</a>
+          <a href="#book">Book</a>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <p>info@firenpizza.com</p>
+          <p>Phone coming soon</p>
+          <p>Peninsula, Bay Area, CA</p>
+        </div>
+        <div class="footer-col">
+          <h5>Follow us</h5>
+          <a href="https://instagram.com/firen.pizza" target="_blank">Instagram @firen.pizza</a>
+          <a href="https://tiktok.com/@firen.pizza" target="_blank">TikTok @firen.pizza</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Firen Pizza. All rights reserved. · firenpizza.com</p>
+      <div class="social-links">
+        <a href="https://instagram.com/firen.pizza" target="_blank" class="social-link">Instagram</a>
+        <a href="https://tiktok.com/@firen.pizza" target="_blank" class="social-link">TikTok</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
